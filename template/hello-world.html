@@ -1,10 +1,13 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="/static/stylesheets/hello-world.css">
         <title>Hello {{.Name}}!</title></head>
     <body>
-        <h1>Hello, {{.Name}}!</h1>
-        <h2>It is currently {{.Time}}</h2>
+        <div class="hello center">
+            Hello, {{.Name}}!
+            It is currently {{.Time}}
+        </div>
     </body>
+    <link rel="stylesheet" href="/static/stylesheets/hello-world.css">
 </html>

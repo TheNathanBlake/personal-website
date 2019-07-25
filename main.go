@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 	"time"
-	"html/template"
 )
 
+/*
+Hello defines the two things that get displayed in the front.
+*/
 type Hello struct {
 	Name string
 	Time string
@@ -19,7 +22,7 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 	templates := template.Must(template.ParseFiles("template/hello-world.html"))
 
 	if name := r.FormValue("name"); name != "" {
-		hello.Name = name;
+		hello.Name = name
 	}
 
 	if err := templates.ExecuteTemplate(w, "hello-world.html", hello); err != nil {
@@ -28,8 +31,10 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-
 	http.HandleFunc("/", handleRequest)
-	fmt.Println("Listening on port 8080");
-    fmt.Println(http.ListenAndServe(":8080", nil));
+	http.Handle("/static/",
+		http.StripPrefix("/static/",
+			http.FileServer(http.Dir("static"))))
+	fmt.Println("Listening on port 8080")
+	fmt.Println(http.ListenAndServe(":8080", nil))
 }
